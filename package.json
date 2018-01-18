@@ -1,0 +1,15 @@
+{
+  "name": "Industry-api",
+  "version": "1.0.0",
+  "description": "Made to help samll manufacturing companies keep track of money spent and money made",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Aldo Torres",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.14.11"
+  }
+}
