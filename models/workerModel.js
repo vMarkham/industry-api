@@ -12,6 +12,7 @@ class workerModel {
   }
 
   static getProjectsByCustomer(customer){
+    console.log(customer);
     return db('projects').where({customer})
   }
 }

@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const path = require('path')
 const cors = require('cors')
+const workerRoutes = require('./routes/workerRoutes')
+const adminRoutes = require('./routes/adminRoutes')
 
 const app = express()
 app.use(bodyParser.json())
@@ -12,6 +14,7 @@ app.use(cors())
 
 
 app.use('/api', workerRoutes)
+app.use('/admin', adminRoutes)
 
 
 app.use((req, res) => {
