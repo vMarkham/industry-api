@@ -22,6 +22,18 @@ class adminCtrl {
     })
   }
 
+
+  ////////////////// verify incoming data ////////////////
+
+  static checkNewUser(req, res, next){
+    if(!name)res.status(400).send({message:'Missing a Name'})
+    if(!Employee_id)res.status(400).send({message:'Missing Employee id, this will be used to log in'})
+    else{
+      next()
+    }
+  }
+
+
 }
 
 
