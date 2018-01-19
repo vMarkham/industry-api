@@ -12,8 +12,17 @@ class workerModel {
   }
 
   static getProjectsByCustomer(customer){
-    console.log(customer);
     return db('projects').where({customer})
+  }
+
+  static getCount(projectID){
+    return db('projects').where({id:projectID}).select('Part_count')
+  }
+
+  static updateCount(count, projectID){
+    return db('projects')
+    .where('id', projectID)
+    .update({Part_count:count})
   }
 }
 
