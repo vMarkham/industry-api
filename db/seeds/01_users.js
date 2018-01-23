@@ -8,7 +8,8 @@ exports.seed = function(knex, Promise) {
         {id: 2, name:'Marge', Employee_id:2},
         {id: 3, name:'Bart', Employee_id:3},
         {id: 4, name:'Lisa', Employee_id:4},
-        {id: 5, name:'Maggie', Employee_id:5}
+        {id: 5, name:'Maggie', Employee_id:5},
+        {id: 6, name: 'Mr. Burnes', Employee_id:6, isAdmin:true}
       ]);
     }).then(() => {
       return knex.raw(

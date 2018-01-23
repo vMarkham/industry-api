@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments()
     table.string('name').notNullable()
     table.integer('Employee_id').notNullable()
+    table.boolean('isAdmin').notNullable().defaultTo(false)
     table.timestamps(true, true)
   })
 };

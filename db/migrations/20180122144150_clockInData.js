@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
     table.dateTime('Clock_out').defaultTo(null)
     table.integer('user_id').notNullable()
     table.foreign('user_id').references('users.id')
+    table.timestamps(true, true)
   })
 };
 

@@ -1,3 +1,5 @@
+require('dotenv').load()
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -25,13 +27,10 @@ app.use((req, res) => {
 })
 
 app.use((err, _req, res, _next) => {
-  // parse error message
-  err = processErrorMessage(err)
-  // display client error on server (if enabled)
-  if (printClientErrorsOnServer) console.error(err)
-  // send error to client
+  // console.log(err, 'it went wrong');
   const status = err.status || 500;
   const message = err.message || 'Something went wrong!'
+  console.log(message);
   res.status(status).json({ status, message })
 })
 
