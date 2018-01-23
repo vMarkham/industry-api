@@ -2,4 +2,7 @@ const express = require('express')
 const router = express.Router()
 const ctrl = require('../ctrls/authCtrl')
 
-router.post("/somepath", ctrl.checkEmpId, ctrl.makeToken)
+router.post('/clockIn', ctrl.checkEmpId, ctrl.makeToken)
+
+
+module.exports = router

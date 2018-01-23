@@ -1,8 +1,14 @@
 const jwt = require('jsonwebtoken')
 const secret = process.env.SECRET_KEY
+const model = require('../models/authModel')
+
+
+
+
 class authCtrl{
 
-  checkEmpId(req, res, next){
+  static checkEmpId(req, res, next){
+    console.log(req.body)
     model.checkEmpId(req.body.id).then(response=>{
       if(response.id == req.body.id){
         req.userid=response.id
@@ -16,12 +22,14 @@ class authCtrl{
     })
   }
 
-  makeToken(req, res, next){
+  static makeToken(req, res, next){
     const token = jwt.sign({id: req.userid}, secret, { expiresIn: '20h' })
     return token
   }
 
-  verifyToken(token){
+  static verifyToken(token){
      return jwt.verify(token,secret)
   }
 }
+
+module.exports = authCtrl

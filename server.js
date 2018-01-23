@@ -5,6 +5,7 @@ const path = require('path')
 const cors = require('cors')
 const workerRoutes = require('./routes/workerRoutes')
 const adminRoutes = require('./routes/adminRoutes')
+const authRoutes = require('./routes/authRoutes')
 
 const app = express()
 app.use(bodyParser.json())
@@ -15,7 +16,7 @@ app.use(cors())
 
 app.use('/api', workerRoutes)
 app.use('/admin', adminRoutes)
-
+app.use('/logs', authRoutes)
 
 app.use((req, res) => {
   const status = 404;

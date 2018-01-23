@@ -2,7 +2,7 @@ db = require('../db/knex')
 
 class authModel {
 
-  static getUser(id){
+  static checkEmpId(id){
     return db('users').where({id})
   }
 
@@ -11,3 +11,6 @@ class authModel {
   }
 
 }
+
+
+module.exports = authModel
