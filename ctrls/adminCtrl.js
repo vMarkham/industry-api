@@ -10,7 +10,8 @@ class adminCtrl {
   }
 
   static getUser(req, res, next){
-    model.getUser().then(result=>{
+    const id = req.params.id
+    model.getUser(id).then(result=>{
       res.status(200).send(result)
     })
   }
