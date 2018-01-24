@@ -14,15 +14,25 @@ class workerCtrl {
   static getProjectData(req, res, next){
     const id = req.params.id
     workerModel.getProjectData(id).then(result=>{
-      console.log(result)
-      return res.status(200).json(result)
+      if(!result){
+        console.log(result);
+        res.status(404).json({message:"No project with that ID"})
+      }else{
+        console.log(result);
+        return res.status(200).json(result)
+      }
+
     })
   }
 
   static getProjectsByCustomer(req, res, next){
     const customer = req.params.name
     workerModel.getProjectsByCustomer(customer).then(result=>{
-      res.status(200).json(result)
+      if(!result){
+        res.status(404).json({message:"That customer has not placed an order yet"})
+      }else{
+        res.status(200).json(result)
+      }
     })
   }
 

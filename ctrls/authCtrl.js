@@ -13,15 +13,26 @@ class authCtrl{
       if(response.id == req.body.id){
         req.userid = response.id
         req.isAdmin=response.isAdmin
-        model.clockIn(req.body.id).then(response=>{
-          console.log('clock time',response)
+        //check to see if clocked in
+        model.checkClock(req.userid).then(result=>{
+          if(result){ next() }
+          else{
+            model.clockIn(req.body.id).then(response=>{
+              console.log('clock time',response)
+            })
+            next()
+          }
         })
-        next()
       }
       else{
         res.status(404).json({message:'There is no Employee with that ID'})
       }
     })
+  }
+
+  static clockOut(req, res, next){
+    const empID = req.params.id
+    model.clockOut(empID)
   }
 
   static makeToken(req, res, next){
