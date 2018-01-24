@@ -14,6 +14,7 @@ class workerCtrl {
   static getProjectData(req, res, next){
     const id = req.params.id
     workerModel.getProjectData(id).then(result=>{
+      console.log(result)
       return res.status(200).json(result)
     })
   }

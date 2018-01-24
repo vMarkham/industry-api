@@ -7,7 +7,7 @@ class adminModel {
   }
 
   static getUser(id){
-    return db('users').where({id})
+    return db('users').where({id}).then(result=> result[0])
   }
 
   static newUser(data){

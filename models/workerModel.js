@@ -8,7 +8,7 @@ class workerModel {
   }
 
   static getProjectData(id){
-    return db('projects').where({id})
+    return db('projects').where({id}).then(result=>result[0])
   }
 
   static getProjectsByCustomer(customer){
