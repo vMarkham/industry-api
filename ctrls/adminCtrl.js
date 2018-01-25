@@ -7,9 +7,11 @@ const jwt = require('jsonwebtoken')
 class adminCtrl {
 
   static checkPass(req, res, next){
-    const id = req.headers.userid
-    const pass = req.headers.pass
+    console.log(req.body)
+    const id = req.body.headers.userid
+    const pass = req.body.headers.pass
     model.getUser(id).then(result=>{
+      console.log(result)
       req.isAdmin = result.isAdmin
       req.userid = result.id
       bcrypt.compare(pass, result.hashPass).then(result=>{
