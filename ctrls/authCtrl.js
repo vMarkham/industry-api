@@ -32,11 +32,14 @@ class authCtrl{
 
   static clockOut(req, res, next){
     const empID = req.params.id
-    model.clockOut(empID)
+    console.log('hit route', empID)
+    model.clockOut(empID).then(result=>{
+      console.log(result)
+    })
   }
 
   static makeToken(req, res, next){
-    console.log(req.userid, 'Something');
+    // console.log(req.userid, 'Something');
     const token = jwt.sign({id: req.userid, isAdmin:req.isAdmin}, secret, { expiresIn: '20h' })
     res.status(200).json({token})
   }

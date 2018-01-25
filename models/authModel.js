@@ -11,12 +11,17 @@ class authModel {
   }
 
   static checkClock(empID){
-    db('clockData').where({user_id:empID, Clock_out:null}).then(result=>
-    console.log(result))
+    return db('clockData').where({user_id:empID, Clock_out:null}).then(result=>{
+      console.log(result, 'clock model')
+      if(result.length<1){
+        return false
+      }
+      else{return true}
+    })
   }
 
   static clockOut(empID){
-    db('clockData').where({user_id:empID, Clock_out:null}).update({Clock_out:new Date()}, returning)
+    return db('clockData').where({user_id:empID, Clock_out:null}).update({Clock_out:new Date()}).returning('*').then(result=>console.log(result))
   }
 
 }
