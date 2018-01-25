@@ -1,4 +1,4 @@
-db = require('../db/knex')
+const db = require('../db/knex')
 
 class adminModel {
 
@@ -7,7 +7,7 @@ class adminModel {
   }
 
   static getUser(id){
-    return db('users').where({id}).then(result=> result[0])
+    return db('users').where({id}).then(result=>result[0])
   }
 
   static newUser(data){
