@@ -2,7 +2,7 @@ const model = require('../models/adminModel')
 const bcrypt = require('bcryptjs')
 const secret = process.env.SECRET_KEY
 const jwt = require('jsonwebtoken')
-
+const moment = require('moment')
 
 class adminCtrl {
 
@@ -11,16 +11,13 @@ class adminCtrl {
     const id = req.body.headers.userid
     const pass = req.body.headers.pass
     model.getUser(id).then(result=>{
-      console.log(result)
+      // console.log(result)
       req.isAdmin = result.isAdmin
       req.userid = result.id
       bcrypt.compare(pass, result.hashPass).then(result=>{
         result ? next() : res.status(401).json({message: "wrong password"})
       })
     })
-
-
-
   }
 
   static allUsers(req, res, next){
@@ -40,6 +37,27 @@ class adminCtrl {
     const user = req.body.user
     model.newUser(user).then(result=>{
       res.status(200).send(result)
+    })
+  }
+
+  static clockedIn(req, res, next){
+    model.clockedIn().then(result=>{
+      if(!result.length){
+        res.status(201).json({message:"Everyone is Clocked out"})
+      }
+      else{
+        console.log('before', result)
+        //.map, .reduce, .filter
+        // they all return arrays
+        // and in the inner function, they all need a `return` keyword
+        result.forEach(data=>{
+          data.Clock_in = moment(data.Clock_in).format('L LTS')
+        })
+
+
+        console.log('after', result);
+        res.status(201).json({data:result})
+      }
     })
   }
 

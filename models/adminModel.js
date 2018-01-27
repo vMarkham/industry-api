@@ -13,6 +13,11 @@ class adminModel {
   static newUser(data){
     return db('users').insert(data, data)
   }
+
+  static clockedIn(){
+    return db('clockData').where({Clock_out:null})
+  }
+
 }
 
 
