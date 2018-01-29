@@ -18,6 +18,15 @@ class adminModel {
     return db('clockData').where({Clock_out:null})
   }
 
+  static timeCardsById(id){
+    console.log(id)
+    return db('clockData').where({"user_id":id})
+  }
+
+  static timeCardDates(id, from, to){
+    return db('clockData').where({"user_id":id}).whereBetween('created_at', [new Date(from), new Date(to)])
+  }
+
 }
 
 

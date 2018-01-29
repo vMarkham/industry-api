@@ -10,6 +10,8 @@ router.get('/getUser/:id', ctrl.getUser)
 router.post('/login', ctrl.checkPass, ctrl.makeToken )
 router.post('/newUser', ctrl.checkNewUser, ctrl.newUser)
 router.get('/clocked/in', ctrl.clockedIn)
+router.get('/clock/records/:id', ctrl.getAllTimeById)
+router.post('/clock/timeperiod/:id', ctrl.getPayPeriod)
 
 
 

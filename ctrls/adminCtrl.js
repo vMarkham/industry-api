@@ -46,21 +46,37 @@ class adminCtrl {
         res.status(201).json({message:"Everyone is Clocked out"})
       }
       else{
-        console.log('before', result)
+        // console.log('before', result)
         //.map, .reduce, .filter
         // they all return arrays
         // and in the inner function, they all need a `return` keyword
         result.forEach(data=>{
           data.Clock_in = moment(data.Clock_in).format('L LTS')
         })
-
-
-        console.log('after', result);
+        // console.log('after', result)
         res.status(201).json({data:result})
       }
     })
   }
 
+  static getAllTimeById(req, res, next){
+    const id = req.params.id
+    console.log('made it')
+    model.timeCardsById(id).then(result=>{
+      console.log(result)
+      result.length ? res.status(200).json({result}) : res.status(200).json({message:"No records found"})
+    })
+  }
+
+  static getPayPeriod(req, res, next){
+    const id= req.params.id
+    // console.log(req.body);
+    const to = req.body.to
+    const from = req.body.from
+    model.timeCardDates(id, from, to).then(result=>{
+      res.status(200).json({result})
+    })
+  }
 
   ////////////////// verify incoming data ////////////////
 
