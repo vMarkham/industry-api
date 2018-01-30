@@ -59,6 +59,13 @@ class workerCtrl {
     })
   }
 
+  static getActiveProjects(req, res, next){
+    const empID = req.params.empID
+    workerModel.activeProjects(empID).then(result=>{
+      res.status(200).json(result)
+    })
+  }
+
 
 
 }

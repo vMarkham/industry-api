@@ -29,6 +29,13 @@ class workerModel {
     return db('labor_hours').insert({
       'user_id': user_id,
       'project_id': id
+    }).returning("*")
+  }
+
+  static activeProjects(empID){
+    return db('labor_hours').innerJoin('projects', 'labor_hours.project_id', '=', 'projects.id').where({
+      'user_id':empID,
+      "hours_worked":null
     })
   }
 
