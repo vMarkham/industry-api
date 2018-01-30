@@ -11,7 +11,7 @@ class adminModel {
   }
 
   static newUser(data){
-    return db('users').returning("*").insert(data).then(result=>result[0])
+    return db('users').returning('*').insert(data).then(result=>result[0])
   }
 
   static clockedIn(){
@@ -25,6 +25,10 @@ class adminModel {
 
   static timeCardDates(id, from, to){
     return db('clockData').where({"user_id":id}).whereBetween('created_at', [new Date(from), new Date(to)])
+  }
+
+  static newProject(data){
+    return db('projects').insert(data).returning('*').then(result=>result[0])
   }
 
 }

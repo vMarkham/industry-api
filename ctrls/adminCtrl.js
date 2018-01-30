@@ -79,6 +79,16 @@ class adminCtrl {
     })
   }
 
+  static newProject(req, res, next){
+    console.log(req.body)
+    const project = req.body
+    model.newProject(project).then(result=>{
+      //console.log(result)
+      res.status(200).json(result)
+    })
+  }
+
+
   ////////////////// verify incoming data ////////////////
 
   static checkNewUser(req, res, next){
