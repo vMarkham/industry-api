@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     table.string('name').notNullable()
     table.integer('Employee_id').notNullable()
     table.boolean('isAdmin').notNullable().defaultTo(false)
-    table.string('hashPass').notNullable().defaultTo('pass')
+    table.string('hashPass').defaultTo('pass')
     table.timestamps(true, true)
   })
 };

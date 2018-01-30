@@ -11,7 +11,7 @@ class adminModel {
   }
 
   static newUser(data){
-    return db('users').insert(data, data)
+    return db('users').returning("*").insert(data).then(result=>result[0])
   }
 
   static clockedIn(){

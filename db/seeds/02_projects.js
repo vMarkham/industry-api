@@ -25,5 +25,7 @@ exports.seed = function(knex, Promise) {
         Part_count: 16
       }
     ]);
-  });
+  }).then(() => {
+    return knex.raw(`SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));`);
+  })
 };

@@ -34,6 +34,7 @@ class adminCtrl {
   }
 
   static newUser(req, res, next){
+    console.log("made it");
     const user = req.body.user
     model.newUser(user).then(result=>{
       res.status(200).send(result)
@@ -81,8 +82,14 @@ class adminCtrl {
   ////////////////// verify incoming data ////////////////
 
   static checkNewUser(req, res, next){
+    console.log(req.body.user)
+    const name = req.body.user.name
+    const Employee_id = req.body.user.Employee_id
+    const admin = req.body.user.isAdmin
+    const pass = req.body.user.hassPass
     if(!name)res.status(400).send({message:'Missing a Name'})
     if(!Employee_id)res.status(400).send({message:'Missing Employee id, this will be used to log in'})
+    if(admin && !pass)res.status(400).send({message:"An Admin must have a Password"})
     else{
       next()
     }
