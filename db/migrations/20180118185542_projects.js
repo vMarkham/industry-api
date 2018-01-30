@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
     table.string('customer').notNullable()
     table.date('due_date').notNullable()
     table.integer('Part_count').notNullable().defaultTo(10)
+    table.integer('Part_No').notNullable()
     table.integer('Parts_made').notNullable().defaultTo(0)
     table.integer('labor_hours').notNullable().defaultTo(0)
     table.timestamps(true, true)
