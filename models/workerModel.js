@@ -24,6 +24,14 @@ class workerModel {
     .where('id', projectID)
     .update({Part_count:count})
   }
+
+  static logProject(id, user_id){
+    return db('labor_hours').insert({
+      'user_id': user_id,
+      'project_id': id
+    })
+  }
+
 }
 
 

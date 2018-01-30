@@ -8,6 +8,7 @@ router.get('/projects/:id', ctrl.getProjectData)
 router.get('/project/:name', ctrl.getProjectsByCustomer)
 router.get('/count/project/:id', ctrl.getCount)
 router.put('/count/update/:id', ctrl.updateCount)
+router.post('/login/project/:id', ctrl.logInProject)
 
 
 module.exports = router

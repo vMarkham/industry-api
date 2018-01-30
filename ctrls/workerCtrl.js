@@ -50,6 +50,15 @@ class workerCtrl {
     })
   }
 
+  static logInProject(req, res, next){
+    const id = req.params.id
+    const user_id = req.body.user_id
+    console.log(user_id);
+    workerModel.logProject(id, user_id).then(result=>{
+      res.status(200).json(result)
+    })
+  }
+
 
 
 }
