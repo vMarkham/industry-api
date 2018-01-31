@@ -15,10 +15,10 @@ class workerCtrl {
     const id = req.params.id
     workerModel.getProjectData(id).then(result=>{
       if(!result){
-        console.log(result);
+        // console.log(result);
         res.status(404).json({message:"No project with that ID"})
       }else{
-        console.log(result);
+        // console.log(result)
         return res.status(200).json(result)
       }
 
@@ -45,7 +45,10 @@ class workerCtrl {
 
   static updateCount(req, res, next){
     const count = req.body.count
-    workerModel.updateCount(count, projectID).then(result=>{
+    const scrap = req.body.scrap
+    const project_id = req.params.id
+    workerModel.updateCount(count, scrap, project_id).then(result=>{
+      console.log(result)
       res.status(200).json(result)
     })
   }
@@ -53,11 +56,26 @@ class workerCtrl {
   static logInProject(req, res, next){
     const id = req.params.id
     const user_id = req.body.user_id
-    console.log(user_id);
-    workerModel.logProject(id, user_id).then(result=>{
-      res.status(200).json(result)
+    // console.log(user_id)
+    workerModel.activeProjects(user_id).then(result=>{
+      const check = result.filter(jobs=>jobs.project_id==id)
+      check.length ? res.status(200).json({message:"already logged into that one"}) : workerModel.logProject(id, user_id).then(result=>{
+        res.status(200).json(result)
+      })
     })
   }
+
+  static logOutProject(req, res, next){
+    const project_id = req.params.id
+    const body = req.body
+    console.log(body)
+
+    workerModel.logOutProject(project_id, body).then(result=>{
+      res.status(200).json(result)
+    })
+
+  }
+
 
   static getActiveProjects(req, res, next){
     const empID = req.params.empID
@@ -65,9 +83,6 @@ class workerCtrl {
       res.status(200).json(result)
     })
   }
-
-
-
 }
 
 

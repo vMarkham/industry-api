@@ -8,6 +8,7 @@ exports.up = function(knex, Promise) {
     table.integer('Part_No').notNullable()
     table.integer('Parts_made').notNullable().defaultTo(0)
     table.integer('labor_hours').notNullable().defaultTo(0)
+    table.integer('scrap_parts').defaultTo(0)
     table.timestamps(true, true)
   })
 };
