@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments()
     table.string('name').notNullable()
     table.integer('Employee_id').notNullable()
+    table.string('img').defaultTo('./images/ComingSoon.jpg')
     table.boolean('isAdmin').notNullable().defaultTo(false)
     table.string('hashPass').defaultTo('pass')
     table.timestamps(true, true)

@@ -6,27 +6,33 @@ exports.seed = function(knex, Promise) {
       {
         id: 1,
         name: 'Homer Simpson',
-        Employee_id: 1
+        Employee_id: 1001,
+        img: "./images/homer.png"
       }, {
         id: 2,
         name: 'Marge Simpson',
-        Employee_id: 2
+        Employee_id: 1002,
+        img:"./images/marge.png"
       }, {
         id: 3,
         name: 'Bart Simpson',
-        Employee_id: 3
+        Employee_id: 1003,
+        img:"./images/bart.jpg"
       }, {
         id: 4,
         name: 'Lisa Simpson',
-        Employee_id: 4
+        Employee_id: 1004,
+        img:"./images/lisa.png"
       }, {
         id: 5,
         name: 'Maggie Simpson',
-        Employee_id: 5
+        Employee_id: 1005,
+        img:"./images/maggie.png"
       }, {
         id: 6,
         name: 'Mr. Burnes',
-        Employee_id: 6,
+        Employee_id: 1000,
+        img:"./images/burns.gif",
         isAdmin: true,
         hashPass: "$2a$12$CE.Mimvz008feVVJeslpVeFCUAt4oO.XB3z8A52l8GWbXeJmG5Gia"
       }
