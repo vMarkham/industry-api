@@ -17,13 +17,33 @@ class workerModel {
   }
 
   static getCount(projectID){
-    return db('projects').where({id:projectID}).select('Parts_made').then(result=>result[0])
+    return db('projects').where({id:projectID}).select('Parts_made', 'scrap_parts').then(result=>result[0])
   }
 
   static updateCount(count, scrap, projectID){
     return db('projects')
     .where({'id':projectID}).returning("*")
     .update({Parts_made:count, scrap_parts:scrap})
+  }
+
+  static updateProjectLabor(body){
+    return db('labor_hours')
+    .select({startTime:'labor_hours.created_at', project_id:'project_id', timeSoFar:'labor_hours'})
+    .innerJoin('projects', 'projects.id', 'labor_hours.project_id')
+    .where({
+      user_id:body.user_id,
+      project_id:body.project_id,
+      hours_worked:null
+    }).first()
+    .then(result=>{
+      return db('projects')
+      .where({id: result.project_id})
+      .returning('*')
+      .update({
+        labor_hours:moment(new Date()).diff(moment(result.startTime))+result.timeSoFar
+      })
+    })
+
   }
 
   static logProject(id, user_id){
@@ -33,7 +53,7 @@ class workerModel {
     }).returning("*")
   }
 
-  static logOutProject(id, body){
+  static logOutProject(body){
     console.log(body)
     return db('labor_hours').select("created_at").where({
       user_id:body.user_id,

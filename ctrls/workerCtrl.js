@@ -45,20 +45,25 @@ class workerCtrl {
 
   static updateCount(req, res, next){
     const countToAdd = parseInt(req.body.count)
-    const scrap = req.body.scrap
+    const scrapToAdd = parseInt(req.body.scrap)
     const project_id = req.params.id
     workerModel.getCount(project_id).then(data=>{
       const oldCount = data.Parts_made
-      console.log(typeof countToAdd, typeof oldCount)
+      const oldScrap = data.scrap_parts
+
+      console.log(typeof scrapToAdd, typeof oldScrap)
       console.log(countToAdd+oldCount)
+
       const newTotal = countToAdd+oldCount
-      workerModel.updateCount(newTotal, scrap, project_id).then(result=>{
+      const newScrapTotal = scrapToAdd+oldScrap
+
+      workerModel.updateCount(newTotal, newScrapTotal, project_id).then(result=>{
         console.log(result)
         res.status(200).json(result)
       })
-
     })
   }
+
 
   static logInProject(req, res, next){
     const id = req.params.id
@@ -76,9 +81,12 @@ class workerCtrl {
   static logOutProject(req, res, next){
     const project_id = req.params.id
     const body = req.body
-    workerModel.logOutProject(project_id, body).then(result=>{
-      res.status(200).json(result)
+    workerModel.updateProjectLabor(body).then(result=>{
+      workerModel.logOutProject(body).then(result=>{
+        res.status(200).json(result)
+      })
     })
+
 
   }
 
