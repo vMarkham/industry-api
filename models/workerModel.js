@@ -17,7 +17,7 @@ class workerModel {
   }
 
   static getCount(projectID){
-    return db('projects').where({id:projectID}).select('Part_count')
+    return db('projects').where({id:projectID}).select('Parts_made').then(result=>result[0])
   }
 
   static updateCount(count, scrap, projectID){
@@ -41,7 +41,6 @@ class workerModel {
       hours_worked:null
     }).first()
     .then(result=>{
-      console.log(result, 'here');
       return db('labor_hours')
       .where({
         user_id:body.user_id,

@@ -44,23 +44,31 @@ class workerCtrl {
   }
 
   static updateCount(req, res, next){
-    const count = req.body.count
+    const countToAdd = parseInt(req.body.count)
     const scrap = req.body.scrap
     const project_id = req.params.id
-    workerModel.updateCount(count, scrap, project_id).then(result=>{
-      console.log(result)
-      res.status(200).json(result)
+    workerModel.getCount(project_id).then(data=>{
+      const oldCount = data.Parts_made
+      console.log(typeof countToAdd, typeof oldCount)
+      console.log(countToAdd+oldCount)
+      const newTotal = countToAdd+oldCount
+      workerModel.updateCount(newTotal, scrap, project_id).then(result=>{
+        console.log(result)
+        res.status(200).json(result)
+      })
+
     })
   }
 
   static logInProject(req, res, next){
     const id = req.params.id
     const user_id = req.body.user_id
-    // console.log(user_id)
     workerModel.activeProjects(user_id).then(result=>{
       const check = result.filter(jobs=>jobs.project_id==id)
       check.length ? res.status(200).json({message:"already logged into that one"}) : workerModel.logProject(id, user_id).then(result=>{
-        res.status(200).json(result)
+        workerModel.activeProjects(user_id).then(data=>{
+          res.status(200).json(data)
+        })
       })
     })
   }
@@ -68,8 +76,6 @@ class workerCtrl {
   static logOutProject(req, res, next){
     const project_id = req.params.id
     const body = req.body
-    console.log(body)
-
     workerModel.logOutProject(project_id, body).then(result=>{
       res.status(200).json(result)
     })
