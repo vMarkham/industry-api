@@ -2,8 +2,8 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('labor_hours', table=>{
     table.increments()
-    table.integer('user_id').notNullable()
-    table.foreign('user_id').references('users.id')
+    table.integer('Employee_id').notNullable()
+    table.foreign('Employee_id').references('users.Employee_id')
     table.integer('project_id').notNullable()
     table.foreign('project_id').references('projects.id')
     table.string('hours_worked').defaultTo(null)

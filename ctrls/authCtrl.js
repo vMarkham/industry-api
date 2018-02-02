@@ -8,12 +8,13 @@ const model = require('../models/authModel')
 class authCtrl{
 
   static checkEmpId(req, res, next){
-    // console.log(req.body, 'the body')
+     console.log(req.body, 'the body')
     model.checkEmpId(req.body.id).then(response=>{
       if (!response ) {
+        console.log(response, "this fucking sucks");
         res.status(404).json({message:'Invalid Employee ID'})
       }else{
-        console.log(response);
+        console.log(response, 'made it')
         req.userid = response.Employee_id
         req.isAdmin= response.isAdmin
         model.checkClock(req.userid).then(result=>{

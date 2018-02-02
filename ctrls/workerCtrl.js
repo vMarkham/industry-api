@@ -67,11 +67,13 @@ class workerCtrl {
 
   static logInProject(req, res, next){
     const id = req.params.id
-    const user_id = req.body.user_id
-    workerModel.activeProjects(user_id).then(result=>{
+    const Employee_id = req.body.Employee_id
+
+    workerModel.activeProjects(Employee_id).then(result=>{
+      console.log(result)
       const check = result.filter(jobs=>jobs.project_id==id)
-      check.length ? res.status(200).json({message:"already logged into that one"}) : workerModel.logProject(id, user_id).then(result=>{
-        workerModel.activeProjects(user_id).then(data=>{
+      check.length ? res.status(200).json({message:"already logged into that one"}) : workerModel.logProject(id, Employee_id).then(result=>{
+        workerModel.activeProjects(Employee_id).then(data=>{
           res.status(200).json(data)
         })
       })

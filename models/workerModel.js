@@ -32,7 +32,7 @@ class workerModel {
     .select({startTime:'labor_hours.created_at', project_id:'project_id', timeSoFar:'labor_hours'})
     .innerJoin('projects', 'projects.id', 'labor_hours.project_id')
     .where({
-      user_id:body.user_id,
+      Employee_id:body.Employee_id,
       project_id:body.project_id,
       hours_worked:null
     }).first()
@@ -49,7 +49,7 @@ class workerModel {
 
   static logProject(id, user_id){
     return db('labor_hours').insert({
-      'user_id': user_id,
+      'Employee_id': user_id,
       'project_id': id
     }).returning("*")
   }
@@ -57,14 +57,14 @@ class workerModel {
   static logOutProject(body){
     console.log(body)
     return db('labor_hours').select("created_at").where({
-      user_id:body.user_id,
+      Employee_id:body.Employee_id,
       project_id:body.project_id,
       hours_worked:null
     }).first()
     .then(result=>{
       return db('labor_hours')
       .where({
-        user_id:body.user_id,
+        Employee_id:body.Employee_id,
         project_id:body.project_id,
         hours_worked:null
       }).returning("*")
@@ -80,7 +80,7 @@ class workerModel {
 
   static activeProjects(empID){
     return db('labor_hours').innerJoin('projects', 'labor_hours.project_id', '=', 'projects.id').where({
-      'user_id':empID,
+      'Employee_id':empID,
       "hours_worked":null
     })
   }
