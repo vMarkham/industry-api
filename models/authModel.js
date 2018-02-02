@@ -11,7 +11,8 @@ class authModel {
   }
 
   static checkClock(empID){
-    return db('clockData').where({user_id:empID, Clock_out:null}).then(result=>{
+    return db('clockData').where({user_id:empID, Clock_out:null})
+    .then(result=>{
       console.log(result, 'clock model')
       if(result.length<1){
         return false

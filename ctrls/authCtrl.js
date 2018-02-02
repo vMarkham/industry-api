@@ -10,22 +10,20 @@ class authCtrl{
   static checkEmpId(req, res, next){
     // console.log(req.body, 'the body')
     model.checkEmpId(req.body.id).then(response=>{
-      if(response.id == req.body.id){
+      if (!response ) {
+        res.status(404).json({message:'Invalid Employee ID'})
+      }else{
         req.userid = response.id
-        req.isAdmin=response.isAdmin
-        //check to see if clocked in
+        req.isAdmin= response.isAdmin
         model.checkClock(req.userid).then(result=>{
           if(result){ next() }
           else{
             model.clockIn(req.body.id).then(response=>{
               console.log('clock time',response)
+              next()
             })
-            next()
           }
         })
-      }
-      else{
-        res.status(404).json({message:'There is no Employee with that ID'})
       }
     })
   }

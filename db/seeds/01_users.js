@@ -4,32 +4,32 @@ exports.seed = function(knex, Promise) {
     // Inserts seed entries
     return knex('users').insert([
       {
-        id: 1,
+        id: 1111,
         name: 'Homer Simpson',
         Employee_id: 1001,
         img: "./images/homer.png"
       }, {
-        id: 2,
+        id: 2222,
         name: 'Marge Simpson',
         Employee_id: 1002,
         img:"./images/marge.png"
       }, {
-        id: 3,
+        id: 3333,
         name: 'Bart Simpson',
         Employee_id: 1003,
         img:"./images/bart.jpg"
       }, {
-        id: 4,
+        id: 4444,
         name: 'Lisa Simpson',
         Employee_id: 1004,
         img:"./images/lisa.png"
       }, {
-        id: 5,
+        id: 5555,
         name: 'Maggie Simpson',
         Employee_id: 1005,
         img:"./images/maggie.png"
       }, {
-        id: 6,
+        id: 0000,
         name: 'Mr. Burnes',
         Employee_id: 1000,
         img:"./images/burns.gif",

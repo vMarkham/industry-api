@@ -13,6 +13,7 @@ class workerModel {
   }
 
   static getProjectsByCustomer(customer){
+    console.log(moment.duration(0)._data)
     return db('projects').where({customer})
   }
 

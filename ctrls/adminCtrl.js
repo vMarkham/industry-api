@@ -11,7 +11,6 @@ class adminCtrl {
     const id = req.body.headers.userid
     const pass = req.body.headers.pass
     model.getUser(id).then(result=>{
-      // console.log(result)
       req.isAdmin = result.isAdmin
       req.userid = result.id
       bcrypt.compare(pass, result.hashPass).then(result=>{
@@ -22,22 +21,22 @@ class adminCtrl {
 
   static allUsers(req, res, next){
     model.allUsers().then(result=>{
-      res.status(200).send(result)
+      res.status(200).json(result)
     })
   }
 
   static getUser(req, res, next){
     const id = req.params.id
     model.getUser(id).then(result=>{
-      res.status(200).send(result)
+      res.status(200).json(result)
     })
   }
 
   static newUser(req, res, next){
     console.log("made it");
     const user = req.body.user
-    model.newUser(user).then(result=>{
-      res.status(200).send(result)
+    model.getUser(user.Employee_id).then(result=>{
+      !result ? model.newUser(user).then(result=>{ res.status(200).json(result)}) : res.status(409).json({message:"Employee ID already taken"})
     })
   }
 
@@ -47,14 +46,9 @@ class adminCtrl {
         res.status(201).json({message:"Everyone is Clocked out"})
       }
       else{
-        // console.log('before', result)
-        //.map, .reduce, .filter
-        // they all return arrays
-        // and in the inner function, they all need a `return` keyword
         result.forEach(data=>{
           data.Clock_in = moment(data.Clock_in).format('L LTS')
         })
-        // console.log('after', result)
         res.status(201).json({data:result})
       }
     })
@@ -71,7 +65,6 @@ class adminCtrl {
 
   static getPayPeriod(req, res, next){
     const id= req.params.id
-    // console.log(req.body);
     const to = req.body.to
     const from = req.body.from
     model.timeCardDates(id, from, to).then(result=>{
@@ -83,7 +76,6 @@ class adminCtrl {
     console.log(req.body)
     const project = req.body
     model.newProject(project).then(result=>{
-      //console.log(result)
       res.status(200).json(result)
     })
   }
@@ -98,13 +90,23 @@ class adminCtrl {
     const admin = req.body.user.isAdmin
     const pass = req.body.user.hassPass
     if(!name)res.status(400).send({message:'Missing a Name'})
-    if(!Employee_id)res.status(400).send({message:'Missing Employee id, this will be used to log in'})
-    if(admin && !pass)res.status(400).send({message:"An Admin must have a Password"})
+    if(!Employee_id)res.status(400).json({message:'Missing Employee id, this will be used to log in'})
+    if(admin && !pass)res.status(400).json({message:"An Admin must have a Password"})
     else{
       next()
     }
   }
 
+  static checkNewProject(req, res, next){
+    const project = req.body
+    console.log(project)
+    if (project.customer.length<1) res.status(400).json({message:"Must Enter a customer name"})
+
+    else if (project.Part_No < 1) res.status(400).json({message:"What part number are we making"})
+
+    else if (project.Part_count < 5) res.status(400).json({message:"Must have at least 5 parts to make an order"})
+    else{next()}
+  }
 
   static makeToken(req, res, next){
     const token = jwt.sign({id: req.userid, isAdmin:req.isAdmin}, secret, { expiresIn: '10h' })
@@ -113,13 +115,10 @@ class adminCtrl {
 
   static verifyToken(req, res, next){
     const token = req.headers.token
-    //console.log(token)
     const decoded = jwt.verify(token, secret)
     console.log("this token is", decoded);
     res.status(200).json(decoded)
   }
-
-
 }
 
 
