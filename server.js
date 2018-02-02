@@ -27,7 +27,6 @@ app.use((req, res) => {
 })
 
 app.use((err, _req, res, _next) => {
-  // console.log(err, 'it went wrong');
   const status = err.status || 500;
   const message = err.message || 'Something went wrong!'
   console.log(message);

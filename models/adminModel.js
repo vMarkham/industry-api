@@ -19,7 +19,6 @@ class adminModel {
   }
 
   static timeCardsById(id){
-    console.log(id)
     return db('clockData').where({"user_id":id})
   }
 

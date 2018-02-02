@@ -7,7 +7,6 @@ const moment = require('moment')
 class adminCtrl {
 
   static checkPass(req, res, next){
-    console.log(req.body)
     const id = req.body.headers.userid
     const pass = req.body.headers.pass
     model.getUser(id).then(result=>{
@@ -33,7 +32,6 @@ class adminCtrl {
   }
 
   static newUser(req, res, next){
-    console.log("made it");
     const user = req.body.user
     model.getUser(user.Employee_id).then(result=>{
       !result ? model.newUser(user).then(result=>{ res.status(200).json(result)}) : res.status(409).json({message:"Employee ID already taken"})
@@ -56,9 +54,7 @@ class adminCtrl {
 
   static getAllTimeById(req, res, next){
     const id = req.params.id
-    console.log('made it')
     model.timeCardsById(id).then(result=>{
-      console.log(result)
       result.length ? res.status(200).json({result}) : res.status(200).json({message:"No records found"})
     })
   }
@@ -73,7 +69,6 @@ class adminCtrl {
   }
 
   static newProject(req, res, next){
-    console.log(req.body)
     const project = req.body
     model.newProject(project).then(result=>{
       res.status(200).json(result)
@@ -84,7 +79,6 @@ class adminCtrl {
   ////////////////// verify incoming data ////////////////
 
   static checkNewUser(req, res, next){
-    console.log(req.body.user)
     const name = req.body.user.name
     const Employee_id = req.body.user.Employee_id
     const admin = req.body.user.isAdmin
@@ -99,7 +93,6 @@ class adminCtrl {
 
   static checkNewProject(req, res, next){
     const project = req.body
-    console.log(project)
     if (project.customer.length<1) res.status(400).json({message:"Must Enter a customer name"})
 
     else if (project.Part_No < 1) res.status(400).json({message:"What part number are we making"})
@@ -117,7 +110,6 @@ class adminCtrl {
   static verifyToken(req, res, next){
     const token = req.headers.token
     const decoded = jwt.verify(token, secret)
-    console.log("this token is", decoded);
     res.status(200).json(decoded)
   }
 }

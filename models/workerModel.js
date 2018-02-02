@@ -13,7 +13,6 @@ class workerModel {
   }
 
   static getProjectsByCustomer(customer){
-    console.log(moment.duration(0)._data)
     return db('projects').where({customer})
   }
 
@@ -55,7 +54,6 @@ class workerModel {
   }
 
   static logOutProject(body){
-    console.log(body)
     return db('labor_hours').select("created_at").where({
       Employee_id:body.Employee_id,
       project_id:body.project_id,

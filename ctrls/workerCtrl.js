@@ -15,10 +15,8 @@ class workerCtrl {
     const id = req.params.id
     workerModel.getProjectData(id).then(result=>{
       if(!result){
-        // console.log(result);
         res.status(404).json({message:"No project with that ID"})
       }else{
-        // console.log(result)
         return res.status(200).json(result)
       }
 
@@ -50,15 +48,9 @@ class workerCtrl {
     workerModel.getCount(project_id).then(data=>{
       const oldCount = data.Parts_made
       const oldScrap = data.scrap_parts
-
-      console.log(typeof scrapToAdd, typeof oldScrap)
-      console.log(countToAdd+oldCount)
-
       const newTotal = countToAdd+oldCount
       const newScrapTotal = scrapToAdd+oldScrap
-
       workerModel.updateCount(newTotal, newScrapTotal, project_id).then(result=>{
-        console.log(result)
         res.status(200).json(result)
       })
     })
@@ -88,8 +80,6 @@ class workerCtrl {
         res.status(200).json(result)
       })
     })
-
-
   }
 
 
