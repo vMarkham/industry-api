@@ -40,11 +40,12 @@ class authCtrl{
 
   static verifyToken(req, res, next){
     const token = req.headers.token
-    const decoded = jwt.verify(token, secret, (err, decoded)=>{
+    jwt.verify(token, secret, (err, decoded)=>{
       if(err)res.status(401).json({message:"Not Authorized"})
+      console.log( typeof decoded)
+      res.status(200).json(decoded)
     })
-    console.log( typeof decoded)
-    res.status(200).json(decoded)
+
   }
 }
 
