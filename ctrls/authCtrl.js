@@ -13,7 +13,8 @@ class authCtrl{
       if (!response ) {
         res.status(404).json({message:'Invalid Employee ID'})
       }else{
-        req.userid = response.id
+        console.log(response);
+        req.userid = response.Employee_id
         req.isAdmin= response.isAdmin
         model.checkClock(req.userid).then(result=>{
           if(result){ next() }

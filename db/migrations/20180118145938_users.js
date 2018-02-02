@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('users', table=>{
     table.increments()
     table.string('name').notNullable()
-    table.integer('Employee_id').notNullable()
+    table.integer('Employee_id').notNullable().unique()
     table.string('img').defaultTo('./images/ComingSoon.jpg')
     table.boolean('isAdmin').notNullable().defaultTo(false)
     table.string('hashPass').defaultTo('pass')
