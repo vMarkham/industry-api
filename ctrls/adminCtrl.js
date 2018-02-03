@@ -63,8 +63,18 @@ class adminCtrl {
     const id= req.params.id
     const to = req.body.to
     const from = req.body.from
+
     model.timeCardDates(id, from, to).then(result=>{
       res.status(200).json({result})
+    })
+  }
+
+  static getAllPayPeriod(req, res, next){
+    const to = req.body.to
+    const from = req.body.from
+    model.allTimeCards(from, to).then(result=>{
+      console.log(result, "made it back")
+      res.status(200).json(result)
     })
   }
 

@@ -19,11 +19,15 @@ class adminModel {
   }
 
   static timeCardsById(id){
-    return db('clockData').where({"user_id":id})
+    return db('clockData').where({"Employee_id":id})
   }
 
   static timeCardDates(id, from, to){
-    return db('clockData').where({"user_id":id}).whereBetween('created_at', [new Date(from), new Date(to)])
+    return db('clockData').where({"Employee_id":id}).whereBetween('created_at', [new Date(from), new Date(to)])
+  }
+
+  static allTimeCards(from, to){
+    return db('clockData').whereBetween('created_at', [new Date(from), new Date(to)])
   }
 
   static newProject(data){
