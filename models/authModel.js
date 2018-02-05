@@ -7,7 +7,7 @@ class authModel {
   }
 
   static clockIn(empID){
-    return db('clockData').insert({Employee_id:empID}).returning('*').then(result => result[0])
+    return db('clock_data').insert({Employee_id:empID}).returning('*').then(result => result[0])
   }
 
   static checkClock(empID){
