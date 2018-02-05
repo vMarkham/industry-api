@@ -11,7 +11,7 @@ class authModel {
   }
 
   static checkClock(empID){
-    return db('clockData').where({Employee_id:empID, Clock_out:null})
+    return db('clock_data').where({Employee_id:empID, Clock_out:null})
     .then(result=>{
       if(result.length<1){
         return false
@@ -21,7 +21,7 @@ class authModel {
   }
 
   static clockOut(empID){
-    return db('clockData').where({Employee_id:empID, Clock_out:null}).update({Clock_out:new Date()}).returning('*').then(result=>console.log(result))
+    return db('clock_data').where({Employee_id:empID, Clock_out:null}).update({Clock_out:new Date()}).returning('*').then(result=>console.log(result))
   }
 
 }

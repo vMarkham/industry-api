@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('clockData', table=>{
+  return knex.schema.createTable('clock_data', table=>{
     table.increments()
     table.timestamp('Clock_in').defaultTo(knex.fn.now());
     table.dateTime('Clock_out').defaultTo(null)
@@ -11,5 +11,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('clockData')
+  return knex.schema.dropTable('clock_data')
 };

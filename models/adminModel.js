@@ -15,19 +15,19 @@ class adminModel {
   }
 
   static clockedIn(){
-    return db('clockData').where({Clock_out:null})
+    return db('clock_data').where({Clock_out:null})
   }
 
   static timeCardsById(id){
-    return db('clockData').where({"Employee_id":id})
+    return db('clock_data').where({"Employee_id":id})
   }
 
   static timeCardDates(id, from, to){
-    return db('clockData').where({"Employee_id":id}).whereBetween('created_at', [new Date(from), new Date(to)])
+    return db('clock_data').where({"Employee_id":id}).whereBetween('Clock_in', [new Date(from), new Date(to)])
   }
 
   static allTimeCards(from, to){
-    return db('clockData').whereBetween('created_at', [new Date(from), new Date(to)])
+    return db('clock_data').whereBetween('Clock_in', [new Date(from), new Date(to)])
   }
 
   static newProject(data){
