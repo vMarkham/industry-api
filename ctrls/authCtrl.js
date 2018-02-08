@@ -13,11 +13,12 @@ class authCtrl{
       model.checkClock(req.body.Employee_id)
     ])
     .then(result=>{
-      console.log(result, "good")
+      console.log(result[1], "good")
       const emp = result[0]
       const logged = result[1]
+
       if(logged.clockIn){
-        const token = jwt.sign({id: emp.Employee_id, isAdmin:emp.isAdmin, clockIn:logged.data.clockIn}, secret, { expiresIn: '20h' })
+        const token = jwt.sign({id: emp.Employee_id, clockIn:logged.data.clock_in}, secret, { expiresIn: '20h' })
         res.status(200).json(token)
       }
       else{
@@ -58,7 +59,7 @@ class authCtrl{
     const token = req.headers.token
     jwt.verify(token, secret, (err, decoded)=>{
       if(err)res.status(401).json({message:"Not Authorized"})
-      console.log( typeof decoded)
+      console.log(decoded, "this is token")
       res.status(200).json(decoded)
     })
 
