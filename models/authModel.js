@@ -14,11 +14,7 @@ class authModel {
     return db('clock_data').where({Employee_id:empID, Clock_out:null})
     .then(result=>{
       if(result.length<1){
-        const res = {
-          clockIn:false,
-          data:result
-        }
-        return res
+        return false
       }
       else{
         const res = {
@@ -31,7 +27,7 @@ class authModel {
   }
 
   static clockOut(empID){
-    return db('clock_data').where({Employee_id:empID, Clock_out:null}).update({Clock_out:new Date()}).returning('*').then(result=>console.log(result))
+    return db('clock_data').where({Employee_id:empID, Clock_out:null}).update({Clock_out:new Date()}).returning('*').first()
   }
 
 }

@@ -13,17 +13,21 @@ class authCtrl{
       model.checkClock(req.body.Employee_id)
     ])
     .then(result=>{
-      console.log(result[1], "good")
+
       const emp = result[0]
       const logged = result[1]
 
       if(logged.clockIn){
-        const token = jwt.sign({id: emp.Employee_id, clockIn:logged.data.clock_in}, secret, { expiresIn: '20h' })
+        console.log(logged.data, "what shows when already clocked in")
+        const token = jwt.sign({id: emp.Employee_id, clockIn:logged.data.Clock_in}, secret, { expiresIn: '20h' })
+
+        console.log(emp, logged, "working Data")
         res.status(200).json(token)
       }
       else{
+        console.log(result, "what shows up when not clocked in yet");
         model.clockIn(emp.Employee_id).then(result=>{
-          const token = jwt.sign({id: result.Employee_id, clockIn:result.Clock_in}, secret, { expiresIn: '20h' })
+          const token = jwt.sign({id: emp.Employee_id, clockIn: new Date()}, secret, { expiresIn: '20h' })
         })
       }
 
@@ -34,8 +38,6 @@ class authCtrl{
     })
   }
 
-
-
   static checkClockIn(req, res, next){
     model.checkClock(req.body.Employee_id).then(result=>{
       res.status(200).json(result.data)
@@ -43,9 +45,10 @@ class authCtrl{
   }
 
   static clockOut(req, res, next){
-    const empID = req.params.id
+    const empID = req.token.id
+    console.log(empID, "made it")
     model.clockOut(empID).then(result=>{
-      console.log(result)
+      res.status(200).json(result)
     })
   }
 
@@ -62,8 +65,21 @@ class authCtrl{
       console.log(decoded, "this is token")
       res.status(200).json(decoded)
     })
-
   }
+
+  static checkToken(req, res, next){
+    const token = req.body.token
+    jwt.verify(token, secret, (err, decoded)=>{
+      console.log(decoded, "this is token")
+      if(err)res.status(401).json({message:"Not Authorized"})
+      else{
+        req.token = decoded
+        next()
+      }
+    })
+  }
+
+
 }
 
 module.exports = authCtrl

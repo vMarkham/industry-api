@@ -4,7 +4,7 @@ const ctrl = require('../ctrls/authCtrl')
 
 
 router.post('/clockIn', ctrl.clockIn)
-router.post('/clockOut/:id', ctrl.clockOut)
+router.put('/clockOut', ctrl.checkToken, ctrl.clockOut)
 router.get('/clockIn/token', ctrl.verifyToken)
 
 

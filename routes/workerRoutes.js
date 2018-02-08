@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const ctrl = require('../ctrls/workerCtrl')
+const auth = require('../ctrls/authCtrl')
 
 
-router.get('/projects', ctrl.getAllProjects)
+router.post('/projects', auth.checkToken, ctrl.getAllProjects)
 router.get('/projects/:id', ctrl.getProjectData)
 router.get('/project/:name', ctrl.getProjectsByCustomer)
 router.get('/active/projects/:empID', ctrl.getActiveProjects)
