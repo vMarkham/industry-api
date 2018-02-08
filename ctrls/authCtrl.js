@@ -7,22 +7,37 @@ const model = require('../models/authModel')
 
 class authCtrl{
 
-  static checkEmpId(req, res, next){
-    model.checkEmpId(req.body.id).then(response=>{
-      if (!response ) {
-        res.status(404).json({message:'Invalid Employee ID'})
-      }else{
-        req.userid = response.Employee_id
-        req.isAdmin= response.isAdmin
-        model.checkClock(req.userid).then(result=>{
-          if(result){ next() }
-          else{
-            model.clockIn(req.body.id).then(response=>{
-              next()
-            })
-          }
+  static clockIn(req, res, next){
+    Promise.all([
+      model.checkEmpId(req.body.Employee_id),
+      model.checkClock(req.body.Employee_id)
+    ])
+    .then(result=>{
+      console.log(result, "good")
+      const emp = result[0]
+      const logged = result[1]
+      if(logged.clockIn){
+        const token = jwt.sign({id: emp.Employee_id, isAdmin:emp.isAdmin, clockIn:logged.data.clockIn}, secret, { expiresIn: '20h' })
+        res.status(200).json(token)
+      }
+      else{
+        model.clockIn(emp.Employee_id).then(result=>{
+          const token = jwt.sign({id: result.Employee_id, clockIn:result.Clock_in}, secret, { expiresIn: '20h' })
         })
       }
+
+    })
+    .catch(err=>{
+      res.status(400).json({message:"someting went wrong"})
+      console.log(err)
+    })
+  }
+
+
+
+  static checkClockIn(req, res, next){
+    model.checkClock(req.body.Employee_id).then(result=>{
+      res.status(200).json(result.data)
     })
   }
 
@@ -34,7 +49,8 @@ class authCtrl{
   }
 
   static makeToken(req, res, next){
-    const token = jwt.sign({id: req.userid, isAdmin:req.isAdmin}, secret, { expiresIn: '20h' })
+    console.log(req.clockIn);
+    const token = jwt.sign({id: req.userid, isAdmin:req.isAdmin, clockIn:req.clockIn}, secret, { expiresIn: '20h' })
     res.status(200).json({token})
   }
 

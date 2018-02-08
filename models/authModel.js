@@ -14,9 +14,19 @@ class authModel {
     return db('clock_data').where({Employee_id:empID, Clock_out:null})
     .then(result=>{
       if(result.length<1){
-        return false
+        const res = {
+          clockIn:false,
+          data:result
+        }
+        return res
       }
-      else{return true}
+      else{
+        const res = {
+          clockIn:true,
+          data:result[0]
+        }
+        return res
+      }
     })
   }
 
