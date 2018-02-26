@@ -79,7 +79,7 @@ class adminCtrl {
   }
 
   static newProject(req, res, next){
-    const project = req.body
+    const project = req.body.project
     model.newProject(project).then(result=>{
       res.status(200).json(result)
     })
@@ -102,7 +102,8 @@ class adminCtrl {
   }
 
   static checkNewProject(req, res, next){
-    const project = req.body
+    const project = req.body.project
+    console.log(project);
     if (project.customer.length<1) res.status(400).json({message:"Must Enter a customer name"})
 
     else if (project.Part_No < 1) res.status(400).json({message:"What part number are we making"})

@@ -68,9 +68,12 @@ class authCtrl{
   }
 
   static checkToken(req, res, next){
-    const token = req.body.token
+
+    // need to change to make all on req.headers.makeToken
+    const token = req.headers.token||req.body.headers.token
+    // console.log(token, req.body.headers)
     jwt.verify(token, secret, (err, decoded)=>{
-      console.log(decoded, "this is token")
+      // console.log(decoded, "this is token")
       if(err)res.status(401).json({message:"Not Authorized"})
       else{
         req.token = decoded
