@@ -9,7 +9,7 @@ router.put('/clockOut', ctrl.checkToken, ctrl.clockOut)
 
 
 ////this???
-router.get('/clockIn/token', ctrl.verifyToken)
+router.post('/clockIn/token', ctrl.verifyToken)
 
 
 
