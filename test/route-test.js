@@ -5,9 +5,6 @@ const app = require('../server.js')
 ///// refer to supertest docs and chai docs
 
 
-
-
-
 function reSeed(){
   'will reseed 1 table in db'
 }

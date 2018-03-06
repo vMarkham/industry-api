@@ -61,6 +61,7 @@ class authCtrl{
   static verifyToken(req, res, next){
     const token = req.body.headers.token
     jwt.verify(token, secret, (err, decoded)=>{
+      console.log(decoded, err, "my token");
       if(err)res.status(401).json({message:"Not Authorized"})
       console.log(decoded, "this is token")
       res.status(200).json(decoded)
